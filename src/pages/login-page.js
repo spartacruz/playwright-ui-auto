@@ -9,6 +9,8 @@ exports.LoginPage = class LoginPage {
         this.passwordLoginField = page.locator('#password');
         this.loginButton = page.locator("xpath=//button[@type='submit']");
         this.loginWithGoogle = page.locator("xpath=//button//*[contains(text(), 'Login dengan Google')]");
+        this.errorEmailWarningIdLocator = "#email-error";
+        this.errorPasswordWarningIdLocator = "#password-error";
     }
 
     async goto() {
