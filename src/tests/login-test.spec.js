@@ -1,6 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../pages/login-page.js');
 const env = require('dotenv').config();
+var loginPage = {}
 
 const credentials = {
     emailz: process.env.emailz,
@@ -12,8 +13,11 @@ test.beforeAll(async () => {
     test.setTimeout(30000);
 });
 
+test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+});
+
 test('LO_1 - (+) Open Login page', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await expect(loginPage.headerLogo).toHaveAttribute('src', /\bLogo-MID-header-white\b/);
     await validationLoginElement(page);
@@ -21,7 +25,6 @@ test('LO_1 - (+) Open Login page', async ({ page }) => {
 });
 
 test('LO_2 - (+) Login with valid email and valid password', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await validationLoginField(loginPage);
     await loginPage.emailLoginField.fill(credentials.emailz);
@@ -31,7 +34,6 @@ test('LO_2 - (+) Login with valid email and valid password', async ({ page }) =>
 });
 
 test('LO_3 - (-) Login with invalid email and valid password', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await validationLoginField(loginPage);
     await loginPage.emailLoginField.fill('androx@gmail.com');
@@ -41,7 +43,6 @@ test('LO_3 - (-) Login with invalid email and valid password', async ({ page }) 
 });
 
 test('LO_4 - (-) Login with valid email and invalid password', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await validationLoginField(loginPage);
     await loginPage.emailLoginField.fill(credentials.emailz);
@@ -51,7 +52,6 @@ test('LO_4 - (-) Login with valid email and invalid password', async ({ page }) 
 });
 
 test('LO_5 - (-) Login with invalid email and invalid password', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await validationLoginField(loginPage);
     await loginPage.emailLoginField.fill('androx@gmail.com');
@@ -61,7 +61,6 @@ test('LO_5 - (-) Login with invalid email and invalid password', async ({ page }
 });
 
 test('LO_6 - (-) Login with blank email and valid password', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await validationLoginField(loginPage);
     await loginPage.passwordLoginField.fill(credentials.emailz);
@@ -71,7 +70,6 @@ test('LO_6 - (-) Login with blank email and valid password', async ({ page }) =>
 });
 
 test('LO_7 - (-) Login with valid email and blank password', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await validationLoginField(loginPage);
     await loginPage.emailLoginField.fill(credentials.emailz);
@@ -81,7 +79,6 @@ test('LO_7 - (-) Login with valid email and blank password', async ({ page }) =>
 });
 
 test('LO_8 - (-) Login with blank email and blank password', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     await loginPage.goto();
     await validationLoginField(loginPage);
     await loginPage.loginButton.click();
