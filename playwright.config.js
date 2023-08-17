@@ -31,6 +31,13 @@ module.exports = defineConfig({
     trace: 'on-first-retry',
   },
 
+  // Web-first assertions like expect(locator).toHaveText() have a separate timeout, 5 seconds by default. 
+  // Assertion timeout is unrelated to the test timeout. It produces the following error:
+  // Set expect timeout in the config
+  expect: {
+    timeout: 10 * 1000,
+  },
+
   /* Configure projects for major browsers */
   projects: [
     {
